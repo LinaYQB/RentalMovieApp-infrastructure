@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: moviestore-api
+  namespace: moviestore
+spec:
+  type: ClusterIP
+  selector:
+    app: moviestore-api
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 8081
+      targetPort: 8081

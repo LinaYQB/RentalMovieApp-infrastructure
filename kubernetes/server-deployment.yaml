@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moviestore-api
+  namespace: moviestore
+  labels:
+    app: moviestore-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moviestore-api
+  template:
+    metadata:
+      labels:
+        app: moviestore-api
+    spec:
+      containers:
+        - name: moviestore-api
+          image: linayqb/rentalmovieapp-api:2.0.0
+          ports:
+            - containerPort: 8080
+            - containerPort: 8081
+          resources:
+            requests:
+              cpu: 200m
+              memory: 300Mi
+            limits:
+              memory: 900Mi
+          env:
+            - name: MSSQL_TCP_PORT
+              value: "1433"
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssqlpassword
+                  key: MSSQLPASSWORD
+            - name: ACCEPT_EULA
+              value: "Y"
+
+

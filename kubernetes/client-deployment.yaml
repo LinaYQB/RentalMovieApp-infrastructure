@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moviestore-client
+  namespace: moviestore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moviestore-client
+  template:
+    metadata:
+      labels:
+        app: moviestore-client
+    spec:
+      containers:
+        - name: moviestore-client
+          image: linayqb/rentalmovieapp-front:2.0.0
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: client-files
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: client-files
+          emptyDir: {}
